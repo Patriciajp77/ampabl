@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+<title>Banco de libros AMPA IES Astures</title>
+<meta content="" name="description">
+<meta content="" name="keywords">
+
+<!-- Favicons -->
+<link th:href="@{../img/favicon.jpg}" rel="icon">
+
+<!-- Google Fonts -->
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Roboto:100,300,400,500,700|Philosopher:400,400i,700,700i"
+	rel="stylesheet">
+
+
+<link href="../vendor/aos/aos.css" rel="stylesheet">
+<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="../vendor/bootstrap-icons/bootstrap-icons.css"
+	rel="stylesheet">
+<link href="../vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+<link href="../vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+
+
+
+<!-- Main CSS File -->
+<link th:href="@{../css/style.css}" rel="stylesheet" />
+
+
+</head>
+
+<body>
+
+	<!-- ======= Header ======= -->
+	<header id="header" class="header fixed-top d-flex align-items-center">
+		<div
+			class="container d-flex align-items-center justify-content-between">
+
+			<div id="logo">
+				<h1>
+					<a href="@{/index}"><span>AMPA</span><img
+						src="../img/logo.jpg" alt="" title="" />IES Astures</a>
+				</h1>
+			</div>
+
+			<nav id="navbar" class="navbar">
+				<ul>
+					<li><a class="nav-link scrollto active"
+						href="index.html/#inicio" th:text="#{menu.principal.inicio}">Inicio</a></li>
+					<li><a class="nav-link scrollto" href="index.html/#normas"
+						th:text="#{menu.principal.normas}">Normas</a></li>
+					<li><a class="nav-link scrollto" href="index.html/#asociacion"
+						th:text="#{menu.principal.asociacion}">Asociación</a></li>
+					<li><a class="nav-link scrollto" href="index.html/#solicitar"
+						th:text="#{menu.principal.solicitar}">Solicitar</a></li>
+					 <li class="dropdown"><a href="#"><span>Idiomas</span> <i class="bi bi-chevron-right"></i></a>
+                  			 <!-- Opciones para idiomas -->
+                        <ul>
+                           <li><a th:href="@{''(lang=es_ES)}">Español</a> </li>
+                    		<li><a th:href="@{''(lang=en_GB)}">Inglés</a> </li>
+
+                        </ul>
+                    </li>
+                   
+                    <!-- Desplegable para logout usuario logueado -->
+                    <li class="dropdown"><a href="#"><span th:text="${#authentication.name}"></span> <i	class="bi bi-chevron-right"></i></a>
+                        <ul>
+                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Salir</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+            <!-- Añadimos la acción de logout para que entre otras cosas limpie los datos de la sesión -->
+            <form th:action="@{/logout}" method="POST" id="logoutForm"></form>
+
+            <!-- .navbar -->
+
+		</div>
+	</header>
+	<!-- End Header -->
+	<!-- ======= solicitar Section ======= -->
+
+	<section id="solicitar" class="padd-section text-cente">
+		<div class="container" data-aos="fade-up">
+			<div class="section-title text-center">
+
+				<h2>
+					Formulario de solicitud : <span th:text="${socio.nombre}"></span>
+				</h2>
+
+				<p class="separator">Tus libros en cuatro pasos.</p>
+			</div>
+			
+			
+			<!--  Formulario para crear un objeto préstamoDTO -->
+			
+			
+			 <form class="form-alumno-div" th:object="${prestamo}" th:action=" @{/insertaPrestamo}" method="post">
+                    
+                    <fieldset class="form-control">     
+                        
+                      <!-- 
+                        <div class="form-group">
+						<label class="control-label" for="alumno">Paso 1.- Nombre del Alumn@:</label> <select th:field="*{alumno}" class="form-control">
+							<option value="-1">------- --------</option>
+							<option th:each=" alumno: ${alumnos}" th:value="${alumno.idalumno}" th:text="${alumno.nombre}">
+							</option>
+						</select>
+                         </div>                          
+                         <div class="form-group">
+						<label class="control-label" for="curso">Paso 2.- ¿Para qué curso necesitas libros?:</label> <select th:field="*{curso}" class="form-control">
+							<option value="-1">-------------</option>
+							<option th:each=" curso: ${cursos}" th:value="${curso.idcurso}" th:text="${curso.nombrecurso}">
+							</option>
+						</select>
+                         </div>
+                           -->
+                    </fieldset>
+				
+                    <div class="section text-center">
+                    			<input   type="submit"class="btn btn-secondary" value="Siguiente"/>						
+			            </div>
+			           
+                </form>
+				
+</div>
+		
+
+	</section>
+	<!-- ======= End  solicitar Section ======= -->
+	<!-- ======= Footer ======= -->
+	
+	<!-- End  Footer -->
+
+	<a href="#"
+		class="back-to-top d-flex align-items-center justify-content-center"><i
+		class="bi bi-arrow-up-short"></i></a>
+
+	<!-- Vendor JS Files -->
+	<script src="../../vendor/glightbox/js/glightbox.min.js"></script>
+	<script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../../vendor/aos/aos.js"></script>
+	<script src="../../vendor/php-email-form/validate.js"></script>
+
+	<script src="../../vendor/swiper/swiper-bundle.min.js"></script>
+
+
+
+	<!-- Template Main JS File -->
+	<script src="../../js/main.js"></script>
+
+
+</body>
+
+</html>

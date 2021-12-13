@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Banco de libros AMPA IES Astures</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="../../img/favicon.jpg" rel="icon">
+
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Roboto:100,300,400,500,700|Philosopher:400,400i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="../../vendor/aos/aos.css" rel="stylesheet">
+    <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="../../vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="../../static/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="../../css/style.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+        <div class="container d-flex align-items-center justify-content-between">
+
+            <div id="logo">
+                <a href="@{/index}"><span>AMPA</span><img src="../../static/img/logo.jpg" alt="" title="" />IES Astures</a>
+            </div>
+
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link scrollto active" th:href="@{/}" th:text="#{menu.principal.inicio}">Inicio</a></li>
+                    <li><a class="nav-link scrollto" th:href="@{/admin}">Gestion</a></li>
+                    <li><a class="nav-link scrollto" th:href="@{/user}">Consultas</a></li>  
+                   
+                   <li class="dropdown"><a href="#"><span>Idiomas</span> <i class="bi bi-chevron-right"></i></a>
+                  			 <!-- Opciones para idiomas -->
+                        <ul>
+                           <li><a th:href="@{''(lang=es_ES)}">Español</a> </li>
+                    		<li><a th:href="@{''(lang=en_GB)}">Inglés</a> </li>
+
+                        </ul>
+                    </li>
+                   
+                    <!-- Desplegable para logout usuario logueado -->
+                    <li class="dropdown"><a href="#"><span th:text="${#authentication.name}"></span> <i	class="bi bi-chevron-right"></i></a>
+                        <ul>
+                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Salir</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+            <!-- Añadimos la acción de logout para que entre otras cosas limpie los datos de la sesión -->
+            <form th:action="@{/logout}" method="POST" id="logoutForm"></form>
+
+            <!-- .navbar -->
+
+        </div>
+    </header>
+    <!-- End Header -->
+    <section id="zonaPrivada" class="padd-section">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+            <div class="container" data-aos="fade-up">
+                <div class="section-title text-center">
+
+                    <h2>Datos del Usuario</h2>
+
+
+                    <p class="separator"></p>
+
+                </div>
+  		<div class="row justify-content-center" >
+		        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <form class="form-socio-div center-h center-v" th:object="${usuario}" th:action=" @{/usuario/guardaUsuario}" method="post" >
+
+						<!--Campo para el nombre-->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="idusuario"> Id </label>
+								<div class="col-md-1">
+									<input  type="text" name="idusuario" id="idusuario" th:field="*{idusuario}"  class="form-control input-md" th:value="*{idusuario}" th:attrappend="readonly=${usuario.idusuario!=0}?'readonly':null">
+								</div>
+								</div>
+						<!--Campo para el nombre-->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="nombre"> Nombre </label>
+								<div class="col-md-4">
+									<input  type="text" name="nombre" id="nombre" th:field="*{nombre}" th:value="*{nombre}"class="form-control input-md">
+								</div>
+								
+							<!--Campo para el cargo-->
+				
+						<label class="col-md-4 control-label" for="cargo"> Cargo en la Asociación</label> 
+							<div class="col-md-4">
+								<input type="text" name="cargo" id="cargo"	th:field="*{cargo}" th:value="*{cargo}" class="form-control input-md">
+								</div>
+							
+							<!--Campo para el username-->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="username">Username </label> 
+							<div class="col-md-4">
+								<input type="text"name="username" id="username" th:field="*{username}"  th:value="*{username}" class="form-control input-md">
+								</div>
+								</div>
+							<!--Campo para el password-->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="password">Password</label>
+						<div class="col-md-4">
+							<input	type="text" name="password" id="password" th:field="*{password}" th:value="*{password}" class="form-control input-md">
+							</div>
+							</div>
+							<!--Campo para el rol-->
+					<div class="form-group">						
+						<label class="col-md-4 control-label" for="rol">Rol</label> 
+						<div class="col-md-4">
+							<select id="selectbasic"	th:field="*{rol}" class="form-control input-md">
+								<option value="-1">-----</option>
+								<option th:each="r : ${T(com.ampa.bl.bl.entidad.Rol).values()}"
+										th:value="${r}" th:text="${r}">
+								</option>
+							</select >
+						</div>
+					</div>
+					</div>
+					<div class="section text-center">
+					<div class="form-group">
+						<input class="btn btn-secondary" type="submit" value="Guardar">
+						<a th:href="@{/gestion}" class="btn btn-secondary">Volver</a>
+						</div>
+					</div>						
+                   
+                </form>
+
+            </div>
+        </div>
+</div>
+</div>
+    </section>
+
+    <!-- ======= Footer ======= -->
+    
+    <!-- End  Footer -->
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+		class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="../../vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../vendor/aos/aos.js"></script>
+    <script src="../../vendor/php-email-form/validate.js"></script>
+
+    <script src="../../vendor/swiper/swiper-bundle.min.js"></script>
+
+
+
+    <!-- Template Main JS File -->
+    <script src="../../js/main.js"></script>
+
+
+</body>
+
+</html>

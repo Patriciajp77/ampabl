@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Banco de libros AMPA IES Astures</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="../../img/favicon.jpg" rel="icon">
+
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Roboto:100,300,400,500,700|Philosopher:400,400i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="../../vendor/aos/aos.css" rel="stylesheet">
+    <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="../../vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="../../static/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="../../css/style.css" rel="stylesheet">
+
+
+
+</head>
+
+<body>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+        <div class="container d-flex align-items-center justify-content-between">
+
+            <div id="logo">
+               <a href="@{/index}"><span>AMPA</span><img
+					src="../../img/logo.jpg" alt="" title="" />IES Astures</a>
+            </div>
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link scrollto active" th:href="@{/}" th:text="#{menu.principal.inicio}">Inicio</a></li>
+                    <li><a class="nav-link scrollto" th:href="@{/admin}">Gestion</a></li>
+                    <li><a class="nav-link scrollto" th:href="@{/user}">Consultas</a></li>  
+                   
+                   <li class="dropdown"><a href="#"><span>Idiomas</span> <i class="bi bi-chevron-right"></i></a>
+                  			 <!-- Opciones para idiomas -->
+                        <ul>
+                           <li><a th:href="@{''(lang=es_ES)}">Español</a> </li>
+                    		<li><a th:href="@{''(lang=en_GB)}">Inglés</a> </li>
+
+                        </ul>
+                    </li>
+                   
+                    <!-- Desplegable para logout usuario logueado -->
+                    <li class="dropdown"><a href="#"><span th:text="${#authentication.name}"></span> <i	class="bi bi-chevron-right"></i></a>
+                        <ul>
+                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Salir</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+            <!-- Añadimos la acción de logout para que entre otras cosas limpie los datos de la sesión -->
+            <form th:action="@{/logout}" method="POST" id="logoutForm"></form>
+
+            <!-- .navbar -->
+
+        </div>
+    </header>
+ <!-- End Header -->
+    <!-- ======= Contenido propio ======= -->
+     <section id="zonaPrivada" class="padd-section text-cente">
+    	
+        <div class="container" data-aos="fade-up">
+            <div class="section-title text-center">
+                <h2>Asignaturas de un curso</h2>
+                <p class="separator"></p>
+            </div>
+
+			<div class="row">		
+				<div class="col-md-6 col-lg-3">
+				<!-- Colocamos los cursos siempre a la vista porque por ellos vamos a obtener filtros para los datos -->		
+				 <div class="feature-block">
+					<h3>Cursos</h3>
+					<ul class="nav-link scrollto ">
+						<li th:each="curso : ${cursos}"><a  th:href="@{/user/misasignaturas?(idcurso=${curso.idcurso})}" th:text="${curso.nombrecurso}">Curso</a></li>	
+					</ul>
+				</div></div>
+				<div class="col-md-6 col-lg-6">
+				<div class="feature-block">
+					<!-- Ofrezco un listado de todas las asignaturas  -->
+	                 <table class="table table-striped table-hover">
+	                       <thead class="thead-green">
+	                            <tr>
+	                               <th class=" text-center">Nombre</th>
+	                                                           
+	                            </tr>
+	                      </thead>
+	                      <tbody>
+	                            <tr th:each ="asignatura : ${asignaturas}">
+	                                <td  th:text="${asignatura.nombreasignatura}"  />
+	                                                               
+	                            </tr>
+	                      </tbody>
+	                 </table>
+	            </div>
+			</div>
+			</div>
+		</div>
+	</section>
+    <!-- ======= Footer ======= -->
+
+    <!-- End  Footer -->
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+		class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="../../vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../vendor/aos/aos.js"></script>
+    <script src="../../vendor/php-email-form/validate.js"></script>
+
+    <script src="../../vendor/swiper/swiper-bundle.min.js"></script>
+
+
+
+    <!-- Template Main JS File -->
+    <script src="../../js/main.js"></script>
+
+
+</body>
+
+</html>
